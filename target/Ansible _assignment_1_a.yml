@@ -1,0 +1,40 @@
+---
+- name: Deploy JAR to S3 and GitHub
+  hosts: localhost
+  vars:
+    s3_bucket: "my-unique-bucket-2024"
+    jar_file: "/home/vagrant/my-app-1.0-SNAPSHOT.jar"
+    github_repo: "https://github.com/Anjali08Patel/Ansible_assignment.git"
+  tasks:
+    - name: Copy JAR file to S3
+      amazon.aws.s3_object:
+        bucket: "{{ s3_bucket }}"
+        object: "my-app-1.0-SNAPSHOT.jar"
+        src: "{{ jar_file }}"
+        mode: put
+
+    - name: Clone the GitHub repository
+      git:
+        repo: "{{ github_repo }}"
+        dest: /tmp/repo
+        version: main
+      delegate_to: localhost
+
+    - name: Copy JAR file to repo
+      copy:
+        src: "{{ jar_file }}"
+        dest: /tmp/repo/my-app-1.0-SNAPSHOT.jar
+      delegate_to: localhost
+
+    - name: Commit and push JAR file to GitHub
+      shell: |
+        cd /tmp/repo
+        git add my-app-1.0-SNAPSHOT.jar
+        git commit -m "Add JAR file"
+    - name: Push Changes to github
+      shell: |
+        git push git@github.com:Anjali08Patel/ansible_assignment.git main
+      args:
+        chdir: /tmp/repo
+        executable: /bin/bash
+      ignore_errors: yes
