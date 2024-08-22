@@ -1,0 +1,5 @@
+ssh -i /workspaces/jenkins_codespace/slave-jenkins.pem ec2-user@107.23.19.14
+to connect with my jenkins node
+
+ansible-playbook -i hosts.ini deploy_python_app.yml --vault-password-file /workspaces/jenkins_codespace/vault_password.txt
+if i am using password

@@ -2,13 +2,15 @@
 - name: Deploy and Run Python Application on Jenkins Node
   hosts: jenkins_nodes
   become: yes
+  vars_files:
+    - vault.yml
 
   tasks:
     - name: Copy the Python app to the Jenkins node
       copy:
-        src: /workspaces/jenkins_codespace/hello.py  # Path to the Python app on the Ansible control machine
-        dest: /home/ec2-user/hello.py  # Path on the Jenkins node
-        mode: '0755'  # Ensure the file is executable
+        src: /workspaces/jenkins_codespace/hello.py  # Path to the Python app on the Ansible server
+        dest: /home/ec2-user/hello.py  # Path on the Jenkins slave node
+        mode: '0755'  #file is executable
 
     - name: Run the Python application
       command: python3 /home/ec2-user/hello.py

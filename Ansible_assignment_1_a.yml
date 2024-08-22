@@ -3,7 +3,7 @@
   hosts: localhost
   vars:
     s3_bucket: "my-unique-bucket-2024"
-    jar_file: "/home/vagrant/my-app-1.0-SNAPSHOT.jar"
+    jar_file: "/workspaces/jenkins_codespace/myapp-1.0-SNAPSHOT.jar"
     github_repo: "https://github.com/Anjali08Patel/Ansible_assignment.git"
   tasks:
     - name: Copy JAR file to S3
