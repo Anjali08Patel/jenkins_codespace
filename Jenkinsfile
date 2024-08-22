@@ -14,7 +14,7 @@ pipeline {
 
                     // Step 2: Run Python application on Ansible node
                     ansiblePlaybook(
-                        playbook: 'run_app.yml',
+                        playbook: 'deploy_python_app.yml',
                         inventory: 'inventory.ini',
                         extras: '-e "python_app=hello.py"'
                     )
